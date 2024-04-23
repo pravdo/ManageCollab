@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AllUsersComponent } from './components/users/all-users/all-users.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthModule } from './services/auth.module';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    FormsModule,
     CommonModule,
     RouterOutlet,
     HomeComponent,

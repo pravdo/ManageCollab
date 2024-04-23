@@ -32,18 +32,15 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
-    return this.http
-      .post<any>(`${this.apiUrl}/login`, { email, password })
-      .pipe(
-        map((user) => {
-          if (user && user.token) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
-          }
-          return user;
-        })
-      );
+  login(credentials: { email: string; password: string }) {
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+      map((response) => {
+        localStorage.setItem('currentUser', JSON.stringify(response.user));
+        localStorage.setItem('authToken', response.token);
+        this.currentUserSubject.next(response.user);
+        return response.user;
+      })
+    );
   }
 
   logout() {
@@ -51,10 +48,14 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
 
-  register(registerDto: RegisterDto) {
-    return this.http.post<any>(`${this.apiUrl}/register`, registerDto).pipe(
-      map((user) => {
-        return user;
+  register(user: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, user).pipe(
+      map((response) => {
+        // Optionally save the token if returned directly upon registration
+        if (response && response.token) {
+          localStorage.setItem('authToken', response.token);
+        }
+        return response.user;
       })
     );
   }
