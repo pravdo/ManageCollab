@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AllUsersComponent } from './components/users/all-users/all-users.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthModule } from './services/auth.module';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { HomeComponent } from './components/home/home.component';
     HomeComponent,
     AllUsersComponent,
     HttpClientModule,
+    AuthModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

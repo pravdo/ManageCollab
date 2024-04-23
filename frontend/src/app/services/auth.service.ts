@@ -5,16 +5,15 @@ import { map } from 'rxjs/operators';
 
 import { User } from '../models/user.model';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class RegisterDto {
   name!: string;
   email!: string;
   password!: string;
   role?: string;
 }
-
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
