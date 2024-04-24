@@ -32,15 +32,21 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(credentials: { email: string; password: string }) {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      map((response) => {
-        localStorage.setItem('currentUser', JSON.stringify(response.user));
-        localStorage.setItem('authToken', response.token);
-        this.currentUserSubject.next(response.user);
-        return response.user;
-      })
-    );
+  login(credentials: { email: string; password: string }): Observable<any> {
+    return this.http
+      .post<{ access_token: string }>(`${this.apiUrl}/login`, credentials)
+      .pipe(
+        map((response) => {
+          if (response && response.access_token) {
+            localStorage.setItem('authToken', response.access_token);
+            localStorage.setItem('currentUser', JSON.stringify(response));
+            return response;
+          } else {
+            console.error('Token is undefined', response);
+            throw new Error('Token is undefined');
+          }
+        })
+      );
   }
 
   logout() {
@@ -51,7 +57,6 @@ export class AuthService {
   register(user: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, user).pipe(
       map((response) => {
-        // Optionally save the token if returned directly upon registration
         if (response && response.token) {
           localStorage.setItem('authToken', response.token);
         }
