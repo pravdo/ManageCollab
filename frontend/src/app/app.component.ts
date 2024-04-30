@@ -7,6 +7,7 @@ import { AllUsersComponent } from './components/users/all-users/all-users.compon
 import { HomeComponent } from './components/home/home.component';
 import { AuthModule } from './services/auth.module';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from './components/view/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     RouterOutlet,
     HomeComponent,
+    NavbarComponent,
     AllUsersComponent,
     HttpClientModule,
     AuthModule,

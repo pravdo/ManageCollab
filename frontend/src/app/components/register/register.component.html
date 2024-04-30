@@ -11,6 +11,10 @@
         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
         required
       />
+      @if (registerForm.get('name')?.touched &&
+      registerForm.get('name')?.errors?.['required']) {
+      <div class="error">Name must be at least 2 characters.</div>
+      }
     </div>
     <div class="mb-6">
       <label for="email" class="block mb-2 text-sm font-medium text-gray-700"
@@ -23,6 +27,13 @@
         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
         required
       />
+      @if (registerForm.get('email')?.touched &&
+      registerForm.get('email')?.errors?.['required']) {
+      <div class="error">Email is required.</div>
+      } @if (registerForm.get('email')?.touched &&
+      registerForm.get('email')?.errors?.['email']) {
+      <div class="error">Please enter a valid email.</div>
+      }
     </div>
     <div class="mb-6">
       <label for="password" class="block mb-2 text-sm font-medium text-gray-700"
@@ -35,6 +46,13 @@
         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
         required
       />
+      @if (registerForm.get('password')?.touched &&
+      registerForm.get('password')?.errors?.['required']) {
+      <div class="error">Password is required</div>
+      } @if (registerForm.get('password')?.touched &&
+      registerForm.get('password')?.errors?.['minLength']) {
+      <div class="error">Password must be at least 6 characters long.</div>
+      }
     </div>
     <div class="mb-6">
       <label for="role" class="block mb-2 text-sm font-medium text-gray-700"

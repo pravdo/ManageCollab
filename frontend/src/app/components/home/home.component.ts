@@ -12,10 +12,8 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   logout() {
-    // Clear local storage or specific items like 'currentUser' or 'authToken'
-    localStorage.clear(); // Or localStorage.removeItem('authToken');
+    localStorage.clear();
 
-    // Navigate to the login page after logout
     this.router.navigate(['/login']);
   }
 }
