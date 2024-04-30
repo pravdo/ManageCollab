@@ -23,14 +23,16 @@ export class AuthGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree => {
-    //Auth user details
     const currentUser = this.authService.currentUserValue;
+    console.log('CurrentUser:', currentUser);
+    console.log('Required Roles:', route.data['roles']);
+
     if (currentUser) {
       if (
         route.data['roles'] &&
-        route.data['roles'].indexOf(currentUser.role) === -1
+        !route.data['roles'].includes(currentUser.role)
       ) {
-        this.router.navigate(['/']);
+        this.router.navigate(['/unauthorized']);
         return false;
       }
       return true;

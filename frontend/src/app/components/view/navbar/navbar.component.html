@@ -75,6 +75,13 @@
               class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >About</a
             >
+            @if (authService.currentUserValue?.role === 'Admin') {
+            <a
+              href="/all"
+              class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              >All Users</a
+            >
+            }
           </div>
         </div>
       </div>

@@ -21,11 +21,27 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User | null>(
-      localStorage.getItem('currentUser')
-        ? JSON.parse(localStorage.getItem('currentUser') as string)
-        : null
+      this.decodeCurrentUser()
     );
     this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  private decodeCurrentUser(): User | null {
+    const token = localStorage.getItem('authToken');
+    if (!token) return null;
+
+    try {
+      const currentUser = localStorage.getItem('currentUser')
+        ? JSON.parse(localStorage.getItem('currentUser') as string)
+        : null;
+
+      return currentUser
+        ? { ...currentUser, role: currentUser.user.role }
+        : null;
+    } catch (error) {
+      console.error('Error decoding token', error);
+      return null;
+    }
   }
 
   public get currentUserValue(): User | null {
