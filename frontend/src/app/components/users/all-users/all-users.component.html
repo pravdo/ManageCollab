@@ -34,9 +34,9 @@
                 </th>
               </tr>
             </thead>
+            @for (user of users; track user._id) {
             <tbody class="bg-white divide-y divide-gray-200">
               <tr class="hover:bg-gray-100">
-                @for (user of users; track user._id) {
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
                     <div class="text-sm font-medium text-gray-900">
@@ -61,9 +61,9 @@
                     >Edit</a
                   >
                 </td>
-                }
               </tr>
             </tbody>
+            }
           </table>
         </div>
       </div>
