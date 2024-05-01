@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthModule } from './services/auth.module';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/view/navbar/navbar.component';
+import { FooterComponent } from './components/view/footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { NavbarComponent } from './components/view/navbar/navbar.component';
     RouterOutlet,
     HomeComponent,
     NavbarComponent,
+    FooterComponent,
     AllUsersComponent,
     HttpClientModule,
     AuthModule,
