@@ -40,8 +40,6 @@ export class NavbarComponent {
 
   getInitials(): string {
     const user = this.authService.currentUserValue;
-    console.log('User:', user?.name);
-    console.log('full user: ', user);
     return user && user.name
       ? user.name
           .split(' ')

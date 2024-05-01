@@ -28,4 +28,20 @@ export class UserService {
       () => new Error('Something bad happened; please try again later.')
     );
   }
+
+  changePassword(
+    currentPassword: string,
+    newPassword: string
+  ): Observable<any> {
+    return this.http.post('/api/change-password', {
+      currentPassword,
+      newPassword,
+    });
+  }
+
+  uploadAvatar(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('avatar', file);
+    return this.http.post('/api/upload-avatar', formData);
+  }
 }
