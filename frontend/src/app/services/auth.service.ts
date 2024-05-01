@@ -35,9 +35,7 @@ export class AuthService {
         ? JSON.parse(localStorage.getItem('currentUser') as string)
         : null;
 
-      return currentUser
-        ? { ...currentUser, role: currentUser.user.role }
-        : null;
+      return currentUser ? { ...currentUser, role: currentUser.role } : null;
     } catch (error) {
       console.error('Error decoding token', error);
       return null;
@@ -50,17 +48,18 @@ export class AuthService {
 
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http
-      .post<{ access_token: string }>(`${this.apiUrl}/login`, credentials)
+      .post<{ access_token: string; user: User }>(
+        `${this.apiUrl}/login`,
+        credentials
+      )
       .pipe(
         map((response) => {
-          if (response && response.access_token) {
+          if (response && response.access_token && response.user) {
             localStorage.setItem('authToken', response.access_token);
-            localStorage.setItem('currentUser', JSON.stringify(response));
-            return response;
-          } else {
-            console.error('Token is undefined', response);
-            throw new Error('Token is undefined');
+            localStorage.setItem('currentUser', JSON.stringify(response.user)); // Make sure to store the 'user' object
+            this.currentUserSubject.next(response.user); // Update BehaviorSubject with the 'user' object
           }
+          return response;
         })
       );
   }

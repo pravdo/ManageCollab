@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -10,4 +10,18 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class NavbarComponent {
   constructor(public authService: AuthService) {}
+
+  getInitials(): string {
+    const user = this.authService.currentUserValue;
+    console.log('User:', user?.name);
+    console.log('full user: ', user);
+    return user && user.name
+      ? user.name
+          .split(' ')
+          .map((part) => part[0])
+          .join('')
+          .toUpperCase()
+          .substring(0, 2)
+      : '??';
+  }
 }

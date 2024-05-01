@@ -82,6 +82,11 @@
               >All Users</a
             >
             }
+            <div
+              class="avatar-circle bg-blue-500 h-10 w-16 rounded-full flex items-center justify-center text-white text-xl"
+            >
+              {{ getInitials() }}
+            </div>
           </div>
         </div>
       </div>
@@ -106,6 +111,18 @@
         class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
         >About</a
       >
+      @if (authService.currentUserValue?.role === 'Admin') {
+      <a
+        href="/all"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+        >All Users</a
+      >
+      }
+      <div
+        class="avatar-circle bg-blue-500 h-10 w-16 rounded-full flex items-center justify-center text-white text-xl"
+      >
+        {{ getInitials() }}
+      </div>
     </div>
   </div>
 </nav>

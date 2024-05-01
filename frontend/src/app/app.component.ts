@@ -9,6 +9,7 @@ import { AuthModule } from './services/auth.module';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/view/navbar/navbar.component';
 import { FooterComponent } from './components/view/footer/footer.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { FooterComponent } from './components/view/footer/footer.component';
     HomeComponent,
     NavbarComponent,
     FooterComponent,
+    ProfileComponent,
     AllUsersComponent,
     HttpClientModule,
     AuthModule,
