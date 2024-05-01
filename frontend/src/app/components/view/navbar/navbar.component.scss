@@ -1,0 +1,26 @@
+.avatar-circle {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 32%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: auto;
+  z-index: 10;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 16px;
+  color: #333;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
