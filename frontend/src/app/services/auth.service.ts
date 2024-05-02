@@ -79,4 +79,8 @@ export class AuthService {
       })
     );
   }
+
+  getAuthToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
 }

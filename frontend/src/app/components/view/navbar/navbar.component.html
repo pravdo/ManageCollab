@@ -81,7 +81,7 @@
               class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >All Users</a
             >
-            } @if (authService.currentUserValue?.name === '') {
+            } @if (authService.currentUserValue?.name !== null) {
             <button
               (click)="toggleDropdown($event)"
               class="relative avatar-circle bg-blue-500 h-10 w-16 rounded-full flex items-center justify-center text-white text-xl"
@@ -129,7 +129,7 @@
         class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
         >All Users</a
       >
-      } @if (authService.currentUserValue?.name === '') {
+      } @if (authService.currentUserValue?.name !== null) {
       <button
         (click)="toggleDropdown($event)"
         class="relative avatar-circle bg-blue-500 h-10 w-16 rounded-full flex items-center justify-center text-white text-xl"

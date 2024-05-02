@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
+// import { HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { TokenInterceptor } from '../../services/token.interceptor';
 
 @Component({
   selector: 'app-profile',
@@ -25,17 +27,17 @@ export class ProfileComponent implements OnInit {
     this.user = this.authService.currentUserValue;
   }
 
-  changePassword(): void {
+  onChangePassword() {
     this.userService
       .changePassword(this.currentPassword, this.newPassword)
-      .subscribe(
-        (response) => {
-          console.log('Password changed successfully');
+      .subscribe({
+        next: (response) => {
+          console.log('Password changed successfully', response);
         },
-        (error) => {
+        error: (error) => {
           console.error('Error changing password', error);
-        }
-      );
+        },
+      });
   }
 
   onFileSelected(event: any): void {

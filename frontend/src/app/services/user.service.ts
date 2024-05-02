@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 
@@ -22,7 +22,7 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  private handleError(error: any) {
+  private handleError(error: HttpErrorResponse) {
     console.error('An error occurred:', error);
     return throwError(
       () => new Error('Something bad happened; please try again later.')
@@ -33,10 +33,10 @@ export class UserService {
     currentPassword: string,
     newPassword: string
   ): Observable<any> {
-    return this.http.post('/api/change-password', {
-      currentPassword,
-      newPassword,
-    });
+    const url = `${this.apiUrl}/change-password`;
+    return this.http
+      .post(url, { currentPassword, newPassword })
+      .pipe(catchError(this.handleError));
   }
 
   uploadAvatar(file: File): Observable<any> {
