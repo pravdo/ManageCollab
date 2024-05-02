@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
-import { FormsModule } from '@angular/forms';
-// import { HTTP_INTERCEPTORS } from '@angular/common/http';
-// import { TokenInterceptor } from '../../services/token.interceptor';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, MatSnackBarModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -20,11 +21,19 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.user = this.authService.currentUserValue;
+  }
+
+  showSnackbar(message: string, type: 'success' | 'error'): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: type === 'success' ? ['snack-success'] : ['snack-error'],
+    });
   }
 
   onChangePassword() {
@@ -33,9 +42,18 @@ export class ProfileComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Password changed successfully', response);
+          this.currentPassword = '';
+          this.newPassword = '';
+          this.showSnackbar('Password changed successfully', 'success');
         },
         error: (error) => {
           console.error('Error changing password', error);
+          this.currentPassword = '';
+          this.newPassword = '';
+          this.showSnackbar(
+            'Error changing password: ' + error.error.message,
+            'error'
+          );
         },
       });
   }
