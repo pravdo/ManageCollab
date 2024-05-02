@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 import { User, UserDocument } from './schema/users.schema';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -35,5 +36,29 @@ export class UsersService {
 
   async remove(id: string): Promise<User> {
     return this.userModel.findByIdAndDelete(id).exec();
+  }
+
+  async changePassword(
+    id: string,
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<any> {
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const passwordMatches = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
+    if (!passwordMatches) {
+      throw new Error('Current password is incorrect');
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedNewPassword;
+    await user.save();
+    return { status: 'password updated successfully' };
   }
 }
