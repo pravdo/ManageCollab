@@ -7,6 +7,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -20,5 +22,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'contact', component: ContactComponent },
+  { path: 'projects', component: ProjectsComponent },
+  { path: 'project/:id', component: ProjectDetailsComponent },
   { path: '**', component: ErrorPageComponent },
 ];

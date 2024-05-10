@@ -30,7 +30,7 @@ export class ContactComponent {
   }
 
   async send() {
-    emailjs.init('');
+    emailjs.init('wyG1KBnOqkvS0vG6A');
     let response = await emailjs.send('service_qz3vngo', 'template_pvgbu6j', {
       from_name: this.form.value.from_name,
       to_name: this.form.value.to_name,
