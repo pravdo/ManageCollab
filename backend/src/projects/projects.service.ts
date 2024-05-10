@@ -15,6 +15,10 @@ export class ProjectsService {
     return newProject.save();
   }
 
+  async findAll(): Promise<Project[]> {
+    return await this.projectModel.find().exec();
+  }
+
   async findOne(id: string): Promise<Project> {
     return this.projectModel.findById(id).exec();
   }
