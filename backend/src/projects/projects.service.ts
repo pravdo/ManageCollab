@@ -3,11 +3,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Project, ProjectDocument } from './schema/projects.schema';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { Task, TaskDocument } from 'src/tasks/schema/tasks.schema';
 
 @Injectable()
 export class ProjectsService {
   constructor(
     @InjectModel(Project.name) private projectModel: Model<ProjectDocument>,
+    @InjectModel(Task.name) private taskModel: Model<TaskDocument>,
   ) {}
 
   async create(createProjectDto: CreateProjectDto): Promise<Project> {
@@ -16,13 +18,32 @@ export class ProjectsService {
   }
 
   async findAll(): Promise<Project[]> {
-    return await this.projectModel.find().exec();
+    return await this.projectModel.find().populate('tasks').exec();
   }
 
   async findOne(id: string): Promise<Project> {
-    return this.projectModel.findById(id).exec();
+    return this.projectModel
+      .findById(id)
+      .populate('projectManager', 'name email') // Populate project manager with only name
+      .populate('members', 'name email')
+      .populate('tasks')
+      .exec();
   }
 
+  async addTask(projectId: string, task: Task): Promise<Task> {
+    const project = await this.projectModel.findById(projectId).exec();
+    if (project) {
+      const createdTask = new this.taskModel(task);
+      const savedTask = await createdTask.save();
+
+      project.tasks = project.tasks || [];
+      project.tasks.push(savedTask._id);
+      await project.save();
+
+      return savedTask;
+    }
+    throw new Error('Project not found');
+  }
   async remove(id: string): Promise<Project> {
     return this.projectModel.findByIdAndDelete(id).exec();
   }

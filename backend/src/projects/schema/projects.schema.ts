@@ -24,6 +24,9 @@ export class Project {
   @Prop({ type: Types.ObjectId, ref: 'User' })
   projectManager: Types.ObjectId;
 
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Task' }] })
+  tasks: Types.ObjectId[];
+
   @Prop({ type: Date, default: Date.now })
   createdAt: Date;
 
