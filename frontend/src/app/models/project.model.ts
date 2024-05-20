@@ -1,3 +1,6 @@
+import { Task } from './task.model';
+import { User } from './user.model';
+
 export interface Project {
   _id: string;
   name: string;
@@ -5,8 +8,9 @@ export interface Project {
   startDate?: Date;
   endDate?: Date;
   status: 'Active' | 'Completed' | 'On Hold';
-  members: string[];
-  projectManager: string;
+  tasks?: Task[];
+  members: User[];
+  projectManager: User;
   createdAt?: Date;
   updatedAt?: Date;
 }
