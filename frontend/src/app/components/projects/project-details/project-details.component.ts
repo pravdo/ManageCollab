@@ -62,30 +62,42 @@ export class ProjectDetailsComponent implements OnInit {
 
   createTask(): void {
     if (this.project) {
-      this.projectService
-        .createTask(this.project._id!, this.newTask)
-        .subscribe({
-          next: (task) => {
-            if (this.project) {
-              this.project.tasks = this.project.tasks || [];
-              this.project.tasks.push(task);
-              this.newTask = {
-                title: '',
-                description: '',
-                status: 'To Do',
-                priority: 'Low',
-                dueDate: new Date(),
-                assignee: '',
-                projectId: this.project._id!,
-                storyPoints: 0,
-                comments: [],
-              };
-            }
-          },
-          error: (err) => {
-            console.error('Error creating task:', err);
-          },
-        });
+      const task: Task = {
+        title: this.newTask.title,
+        description: this.newTask.description,
+        status: this.newTask.status,
+        priority: this.newTask.priority,
+        assignee: this.newTask.assignee,
+        storyPoints: this.newTask.storyPoints,
+        dueDate: this.newTask.dueDate,
+        comments: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        projectId: this.project._id!,
+      };
+
+      this.projectService.createTask(this.project._id!, task).subscribe({
+        next: (task) => {
+          if (this.project) {
+            this.project.tasks = this.project.tasks || [];
+            this.project.tasks.push(task);
+            this.newTask = {
+              title: '',
+              description: '',
+              status: 'To Do',
+              priority: 'Low',
+              dueDate: new Date(),
+              assignee: '',
+              projectId: this.project._id!,
+              storyPoints: 0,
+              comments: [],
+            };
+          }
+        },
+        error: (err) => {
+          console.error('Error creating task:', err);
+        },
+      });
     }
   }
 
