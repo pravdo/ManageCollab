@@ -38,4 +38,15 @@ export class CreateTaskDto {
   @IsOptional()
   @IsDate()
   dueDate: Date;
+
+  @IsOptional()
+  comments: string[];
+
+  @IsOptional()
+  @IsDate()
+  createdAt: Date;
+
+  @IsOptional()
+  @IsDate()
+  updatedAt: Date;
 }

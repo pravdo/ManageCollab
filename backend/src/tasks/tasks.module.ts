@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TaskSchema } from './schema/tasks.schema';
+import { Task, TaskSchema } from './schema/tasks.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TasksService } from './tasks.service';
 import { TasksController } from './tasks.controller';
@@ -8,7 +8,7 @@ import { TasksController } from './tasks.controller';
   imports: [
     MongooseModule.forFeature([
       {
-        name: 'Task',
+        name: Task.name,
         schema: TaskSchema,
         collection: 'tasks',
       },
@@ -16,5 +16,6 @@ import { TasksController } from './tasks.controller';
   ],
   providers: [TasksService],
   controllers: [TasksController],
+  exports: [MongooseModule],
 })
 export class TasksModule {}

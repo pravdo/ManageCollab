@@ -3,6 +3,7 @@ import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { Project } from './schema/projects.schema';
 import { Task } from 'src/tasks/schema/tasks.schema';
+import { CreateTaskDto } from 'src/tasks/dto/create-task.dto';
 
 @Controller('projects')
 export class ProjectsController {
@@ -14,8 +15,11 @@ export class ProjectsController {
   }
 
   @Post(':id/tasks')
-  async createTask(@Param('id') id: string, @Body() task: Task): Promise<Task> {
-    return this.projectsService.addTask(id, task);
+  async createTask(
+    @Param('id') projectId: string,
+    @Body() createTaskDto: CreateTaskDto,
+  ): Promise<Task> {
+    return this.projectsService.createTask(projectId, createTaskDto);
   }
 
   @Get()

@@ -3,6 +3,7 @@ import { ProjectSchema } from './schema/projects.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectsService } from './projects.service';
 import { ProjectsController } from './projects.controller';
+import { TasksModule } from 'src/tasks/tasks.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ProjectsController } from './projects.controller';
         collection: 'projects',
       },
     ]),
+    TasksModule,
   ],
   providers: [ProjectsService],
   controllers: [ProjectsController],
